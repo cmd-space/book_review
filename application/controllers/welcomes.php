@@ -74,9 +74,17 @@ class Welcomes extends CI_Controller {
   }
 
   public function add() {
+  	$this->output->enable_profiler(TRUE);
   	$this->load->model('Welcome');
-  	$authors = $this->Welcome->get_authors();
+  	$author_array = $this->Welcome->get_authors();
+  	$authors['author'] = $author_array;
+  	// var_dump($authors);
+  	// die();
   	$this->load->view('add', $authors);
+  }
+
+  public function book($id) {
+  	
   }
 }
 

@@ -15,4 +15,8 @@ class Welcome extends CI_Model {
   public function get_authors() {
   	return $this->db->query('SELECT author FROM books')->result_array();
   }
+
+  public function book_page($id) {
+  	$this->db->query("SELECT * FROM books WHERE id = ?", $id)->row_array();
+  }
 }

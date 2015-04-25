@@ -18,3 +18,13 @@
 #book-head a {
 	margin-left: 55%;
 }
+#add-head,
+#add-author {
+	list-style-type: none;
+}
+#add-head {
+	margin-left: 55%;
+}
+#add-head li {
+	display: inline;
+}
