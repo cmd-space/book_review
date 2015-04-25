@@ -8,7 +8,7 @@ class Welcome extends CI_Model {
   	return $this->db->query($query, $values);
   }
 
-  public function user_by_id($id) {
-
+  public function user_by_email($email) {
+  	return $this->db->query('SELECT * FROM users WHERE email = ?', $email)->row_array();
   }
 }

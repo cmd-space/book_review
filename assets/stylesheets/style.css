@@ -8,3 +8,10 @@
 .error {
 	color: red;
 }
+#book-head p,
+#book-head a {
+	display: inline-block;
+}
+#book-head a {
+	margin-left: 45%;
+}
