@@ -41,7 +41,7 @@ class Welcomes extends CI_Controller {
   	$this->load->model('Welcome');
   	$user = $this->session->flashdata('user');
   	$this->Welcome->create($user);
-  	$this->session->set_flashdata('user', $user);
+  	$this->session->set_userdata('user', $this->Welcome->user_by_email($user['email']));
   	redirect('/welcomes/books');
   }
 
@@ -54,8 +54,7 @@ class Welcomes extends CI_Controller {
   			$this->session->set_flashdata('log_errors', array('db_no' => 'Incorrect username or password'));
   			redirect('/');
   		} else {
-  			$this->session->set_flashdata('user', $db_user);
-  			$this->session->set_userdata('user_id', $db_user['id']);
+  			$this->session->set_userdata('user', $db_user);
   			redirect('/welcomes/books');
   		}
   	} else {
@@ -65,10 +64,19 @@ class Welcomes extends CI_Controller {
   }
 
   public function books() {
-  	$user = $this->session->flashdata('user');
-  	var_dump($user);
-  	die();
+  	$user = $this->session->userdata('user');
   	$this->load->view('books', $user);
+  }
+
+  public function destroy() {
+  	$this->session->sess_destroy();
+  	redirect('/');
+  }
+
+  public function add() {
+  	$this->load->model('Welcome');
+  	$authors = $this->Welcome->get_authors();
+  	$this->load->view('add', $authors);
   }
 }
 

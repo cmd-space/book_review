@@ -11,4 +11,8 @@ class Welcome extends CI_Model {
   public function user_by_email($email) {
   	return $this->db->query('SELECT * FROM users WHERE email = ?', $email)->row_array();
   }
+
+  public function get_authors() {
+  	return $this->db->query('SELECT author FROM books')->result_array();
+  }
 }

@@ -12,6 +12,9 @@
 #book-head a {
 	display: inline-block;
 }
+#book-head #logout {
+	margin-left: .5em;
+}
 #book-head a {
-	margin-left: 45%;
+	margin-left: 55%;
 }

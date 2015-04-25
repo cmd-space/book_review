@@ -8,7 +8,7 @@
 <body>
 	<div id='book-head'>
 		<p>Welcome, <?= $name ?>!</p>
-		<a href="/welcomes/add_review">Add Book and Review</a>
+		<a href="/welcomes/add">Add Book and Review</a>
 		<a href="/welcomes/destroy" id="logout">Logout</a>
 	</div>
 </body>
