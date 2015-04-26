@@ -15,8 +15,26 @@ class Welcome extends CI_Model {
   public function get_authors() {
   	return $this->db->query('SELECT author FROM books')->result_array();
   }
-
+  // Grabs info for each book to display an individualized page
   public function book_page($id) {
   	$this->db->query("SELECT * FROM books WHERE id = ?", $id)->row_array();
+  }
+  // Add a review to the DB
+  public function add_review($review) {
+  	$query = "INSERT INTO reviews (review, rating, created_at, updated_at)
+			  VALUES (?,?,NOW(),NOW())";
+	$values = array($review['review'], $review['stars']);
+	return $this->db->query($query, $values);
+  }
+  // Add a book to the DB
+  public function add_book($book) {
+  	$query = "INSERT INTO books (title, author, created_at, updated_at)
+  			  VALUES (?,?,NOW(),NOW())";
+  	$values = array($book['title'], $book['author']);
+  	return $this->db->query($query, $values);
+  }
+  // Checks for duplicate books
+  public function check_book($book) {
+  	return $this->db->query("SELECT * FROM books WHERE title = ? AND author = ?", $book);
   }
 }

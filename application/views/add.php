@@ -11,6 +11,11 @@
 		<li><a href="/welcomes/destroy">Logout</a></li>
 	</ul>
 	<h3>Add a New Book Title and a Review:</h3>
+<?php
+	if($errors) {
+		echo "<p class='error'>".$errors."</p>";
+	}
+?>
 	<form action="/welcomes/add_review" method="post">
 		<p>
 			<label for="title">Book Title: </label>
@@ -20,6 +25,7 @@
 			<label for="author">Author: </label>
 			<ul id='add-author'>
 				<li>Choose from the list: <select name="author">
+											<option value=""></option>
 <?php
 	foreach($author as $auth) {
 		foreach($auth as $a) {

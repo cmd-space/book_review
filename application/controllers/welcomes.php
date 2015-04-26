@@ -78,13 +78,38 @@ class Welcomes extends CI_Controller {
   	$this->load->model('Welcome');
   	$author_array = $this->Welcome->get_authors();
   	$authors['author'] = $author_array;
-  	// var_dump($authors);
-  	// die();
+  	$authors['errors'] = $this->session->flashdata('errors');
   	$this->load->view('add', $authors);
   }
 
+  public function add_review() {
+  	$this->load->library('form_validation');
+  	$this->form_validation->set_rules('title', 'Title', 'trim|required');
+  	if($this->form_validation->run() === FALSE) {
+  		$this->session->set_flashdata('errors', 'Please enter a title');
+  		redirect('/welcomes/add');
+  	} else {
+	  	$this->load->model('Welcome');
+	  	$review['review'] = $this->input->post('review');
+	  	$review['stars'] = $htis->input->post('stars');
+	  	if($this->input->post('author') === '') {
+	  		$review['author'] = $this->input->post('add_author');
+	  	}
+	  	// This should come after figuring out whether or not the book already exists
+	  	// $this->Welcome->add_review($review);
+	  	$book['title'] = $this->input->post('title');
+	  	$book['author'] = $this->input->post('author');
+	  	$this->Welcome->add_book($book);
+	  	$this->load->view('book')
+	}
+  }
+
   public function book($id) {
-  	
+  	$this->load->model('Welcome');
+  	$book = $this->Welcome->book_page($id);
+  	var_dump($book);
+  	die();
+  	$this->load->view('book', $book);
   }
 }
 
