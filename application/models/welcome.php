@@ -21,9 +21,9 @@ class Welcome extends CI_Model {
   }
   // Add a review to the DB
   public function add_review($review) {
-  	$query = "INSERT INTO reviews (review, rating, created_at, updated_at)
-			  VALUES (?,?,NOW(),NOW())";
-	$values = array($review['review'], $review['stars']);
+  	$query = "INSERT INTO reviews (review, rating, created_at, updated_at, user_id, book_id)
+			  VALUES (?,?,NOW(),NOW(),?,?)";
+	$values = array($review['review'], $review['stars'], $review['user'], $review['book']);
 	return $this->db->query($query, $values);
   }
   // Add a book to the DB
@@ -35,6 +35,6 @@ class Welcome extends CI_Model {
   }
   // Checks for duplicate books
   public function check_book($book) {
-  	return $this->db->query("SELECT * FROM books WHERE title = ? AND author = ?", $book);
+  	return $this->db->query("SELECT * FROM books WHERE title = ? AND author = ?", $book)->row_array();
   }
 }

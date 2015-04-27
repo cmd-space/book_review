@@ -91,16 +91,26 @@ class Welcomes extends CI_Controller {
   	} else {
 	  	$this->load->model('Welcome');
 	  	$review['review'] = $this->input->post('review');
-	  	$review['stars'] = $htis->input->post('stars');
+	  	$review['stars'] = $this->input->post('stars');
 	  	if($this->input->post('author') === '') {
-	  		$review['author'] = $this->input->post('add_author');
+	  		$book['author'] = $this->input->post('add_author');
+	  	} else {
+	  		$book['author'] = $this->input->post('author');
 	  	}
 	  	// This should come after figuring out whether or not the book already exists
 	  	// $this->Welcome->add_review($review);
 	  	$book['title'] = $this->input->post('title');
-	  	$book['author'] = $this->input->post('author');
-	  	$this->Welcome->add_book($book);
-	  	$this->load->view('book')
+	  	if(!empty($this->Welcome->check_book($book))) {
+	  		$id = $this->Welcome->check_book($book)['id'];
+	  		$review['user'] = $this->session->userdata['user']['id'];
+	  		$review['book'] = $id;
+	  		$this->Welcome->add_review($review);
+	  		$this->load->view('/welcomes/book/<?= $id ?>');
+	  	} else {
+	  		$this->Welcome->add_book($book);
+	  		$id = $this->db->insert_id();
+	  		$this->load->view('/welcomes/book/<?= $id ?>');
+	  	}
 	}
   }
 
@@ -109,7 +119,7 @@ class Welcomes extends CI_Controller {
   	$book = $this->Welcome->book_page($id);
   	var_dump($book);
   	die();
-  	$this->load->view('book', $book);
+  	$this->load->view('book/<?= $id ?>', $book);
   }
 }
 
